@@ -135,7 +135,7 @@ doctorSchema.pre("save", async function (next) {
   next();
 });
 
-doctorSchema.statics.login = async function (email, password) {
+doctorSchema.statics. = async function (email, password) {
   const doctor = await this.findOne({ email });
   if (doctor) {
     const auth = await bcrypt.compare(password, doctor.password);

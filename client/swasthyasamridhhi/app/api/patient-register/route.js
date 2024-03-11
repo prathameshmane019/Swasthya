@@ -12,6 +12,6 @@ export async function POST(req) {
       await newData.save();
       const users = await User.find();
       console.log(users);
-    console.log(name,age);
+      console.log(name,age);
     return NextResponse.json({message:"Data displayed"})
 }

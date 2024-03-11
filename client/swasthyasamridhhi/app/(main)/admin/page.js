@@ -19,7 +19,7 @@ function ExampleComponent() {
       console.error('Error:', error.response.data);
     }
   };
-
+  
   return (
     <div>
       <h1>Example Component</h1>
