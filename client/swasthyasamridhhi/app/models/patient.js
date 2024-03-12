@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-
+const { isEmail, isMobilePhone } = require("validator");
+const prescriptionSchema = require("./prescription");
 const res = require("express/lib/response");
 
 const patientSchema = new mongoose.Schema({
   healthID: {
     type: String,
-    },
+  },
   name: {
     firstName: {
       type: String,
@@ -33,7 +34,7 @@ const patientSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, "Please enter email"],
-    
+    validate: [isEmail, "Please Enter a valid Email"],
   },
   adharCard: {
     type: Number,
@@ -108,7 +109,7 @@ const patientSchema = new mongoose.Schema({
     email: {
       type: String,
       lowercase: true,
-      
+      validate: [isEmail, "Please enter a valid email."],
     },
     relation: {
       type: String,
@@ -142,7 +143,7 @@ const patientSchema = new mongoose.Schema({
       },
     },
   },
-  
+  prescriptions: [prescriptionSchema],
 });
 
 patientSchema.pre("save", async function (next) {
