@@ -1,15 +1,10 @@
-'use client'
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react'
 
-function ExampleComponent() {
-  const [formData, setFormData] = useState({ name: '', age: '' });
+function page() {
+ 
 
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({ ...prevState, [name]: value }));
-  };
 
+<<<<<<< HEAD
   const handleSubmit = async e => {
     e.preventDefault();
     try {
@@ -20,16 +15,14 @@ function ExampleComponent() {
     }
   };
   
+=======
+
+>>>>>>> parent of 4db298d (1.0.1)
   return (
     <div>
-      <h1>Example Component</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} />
-        <input type="number" name="age" placeholder="Age" value={formData.age} onChange={handleChange} />
-        <button type="submit">Submit</button>
-      </form>
+      this is admin page
     </div>
-  );
+  )
 }
 
-export default ExampleComponent;
+export default page

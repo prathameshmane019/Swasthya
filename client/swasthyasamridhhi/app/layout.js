@@ -1,7 +1,11 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+<<<<<<< HEAD
 import StoreProvider from './store/StoreProvider'
 import { AuthProvider } from "./Providers";
+=======
+
+>>>>>>> parent of 4db298d (1.0.1)
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -11,12 +15,19 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+<<<<<<< HEAD
     
   <StoreProvider>
+=======
+>>>>>>> parent of 4db298d (1.0.1)
     <html lang="en">
       <body className={inter.className}><AuthProvider>{children}</AuthProvider></body>
     </html>
+<<<<<<< HEAD
    </StoreProvider>
  
       );
+=======
+  );
+>>>>>>> parent of 4db298d (1.0.1)
 }
