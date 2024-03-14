@@ -9,13 +9,16 @@ export const authOptions = ({
       credentials: {},
       async authorize(credentials) {
         try {
-          console.log(credentials.address);
+          
           await connectMongoDB();
-          const user = await User.findOne({ blockchainAddress: credentials.address });
+          const address = credentials.address;
+          const user = await User.findOne({ blockchainAddress: address });
+
           const isVerified = user.blockchainAddress == credentials.address;
+
           console.log(isVerified);
+          
           console.log(user);
-          // If user exists, return user object
           if (!user) {
             return null;
           }
