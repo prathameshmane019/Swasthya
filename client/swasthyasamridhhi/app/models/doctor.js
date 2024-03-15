@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const { isEmail } = require("validator");
 
-const doctorSchema = new mongoose.Schema({
+const doctorSchema = new mongoose.Schema(
   doctorID: {
     type: String,
     unique: true, 
@@ -35,6 +35,36 @@ const doctorSchema = new mongoose.Schema({
       },
     },
   ],
+  org: {
+    type: String,
+    required: [true, "Please enter Hospital of clinic name."],
+  },
+  orgAddress: {
+    building: {
+      type: String,
+      required: [true, "Please enter complete Address of contact person"],
+    },
+    city: {
+      type: String,
+      required: [true, "Please enter complete Address of contact person"],
+    },
+    taluka: {
+      type: String,
+      required: [true, "Please enter complete Address of contact person"],
+    },
+    district: {
+      type: String,
+      required: [true, "Please enter complete Address of contact person"],
+    },
+    state: {
+      type: String,
+      required: [true, "Please enter complete Address of contact person"],
+    },
+    pincode: {
+      type: Number,
+      required: [true, "Please Enter complete Address of contact person"],
+    },
+  },
   dob: {
     type: Date,
     required: [true, "Please enter Date of Birth"],
@@ -79,6 +109,16 @@ orgAddress: {
     required: [true, "Please Enter complete Address of contact person"],
   },
 },
+    type: String,
+    required: [true, "Please enter Mobile Number"],
+    minlength: [10, "Please Enter a valid Mobile Number"],
+  },
+  email: {
+    type: String,
+    required: [true, "Please enter email"],
+    unique: [true, "Email already Exist"],
+    validate: [isEmail, "Please Enter a valid Email"],
+  },
   adharCard: {
     type: Number,
     unique: [true, "This AdharCard is already Registerd on System."],
@@ -89,8 +129,6 @@ orgAddress: {
     type: String,
     required: [true, "Please enter Blood Group"],
   },
-  
-  
   education: [
     {
       degree: {
@@ -98,6 +136,12 @@ orgAddress: {
       },
     },
   ],
+  password: {
+    type: String,
+    required: [true, "Please enter password"],
+    minlength: [8, "Minimum length of password should must be 8 characters"],
+  },
+
   address: {
     building: {
       type: String,
@@ -124,12 +168,22 @@ orgAddress: {
       required: [true, "Please Enter complete Address of contact person"],
     },
   },
+
   licenseNumber: {
     type: String,
     required: [true, "Please enter License Number"],
 },
 
   
+
+  specialization: [
+    {
+      special: {
+        type: String,
+      },
+    },
+  ],
+
   emergencyno: {
     type: String,
     required: [true, "Please enter Mobile Number"],
@@ -140,7 +194,9 @@ orgAddress: {
     required: [true, "Please enter Mobile Number"],
     minlength: [10, "Please Enter a valid Mobile Number"],
   },
+
   timestamps: true
+
 });
 
 doctorSchema.pre("save", async function (next) {
@@ -149,7 +205,17 @@ doctorSchema.pre("save", async function (next) {
   next();
 });
 
-
+doctorSchema.statics. = async function (email, password) {
+  const doctor = await this.findOne({ email });
+  if (doctor) {
+    const auth = await bcrypt.compare(password, doctor.password);
+    if (auth) {
+      return doctor;
+    }
+    throw Error("Incorrect Password");
+  }
+  throw Error("Invalid email");
+};
 
 const Doctor = mongoose.model("doctor", doctorSchema);
 

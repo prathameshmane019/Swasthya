@@ -4,9 +4,11 @@ import axios from 'axios';
 
 import { useState } from 'react';
 
+
 export default function Register() {
   const [formData, setFormData] = useState({
-    username: '',
+    name: '',
+
     email: '',
   });
 
@@ -17,11 +19,15 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Send registration data to the server
+
+    // Extracting only name and email from formData
+    const { name, email } = formData;
+    const dataToSend = { name, email };
     try {
-        console.log(formData);
-        const response = await axios.post('/api/signup', formData);
-        console.log('Response:', response.data);
+      console.log(dataToSend);
+      const response = await axios.post('/api/signup', dataToSend);
+      console.log('Response:', response.data);
+
     } catch (error) {
       console.error('Error:', error);
     }
@@ -37,19 +43,23 @@ export default function Register() {
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+
                 Username
               </label>
               <div className="mt-1">
                 <input
-                  id="username"
-                  name="username"
+
+                  id="name"
+                  name="name"
                   type="text"
-                  autoComplete="username"
-                  value={formData.username}
+                  autoComplete="name"
+                  value={formData.name}
                   onChange={handleChange}
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+
                 />
               </div>
             </div>
@@ -67,7 +77,9 @@ export default function Register() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+
                 />
               </div>
             </div>
