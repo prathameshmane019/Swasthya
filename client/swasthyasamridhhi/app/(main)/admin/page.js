@@ -22,13 +22,15 @@ function ExampleComponent() {
     }
   };
 
+
+function page() {
   return (
     <div className=' bg-purple-300'>
       <DefaultLayout className=' bg-purple-300'>
           <Compoanants></Compoanants>
       </DefaultLayout>
     </div>
-  );
+  )
 }
 
-export default ExampleComponent;
+export default page

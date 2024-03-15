@@ -1,12 +1,19 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-
+const { isEmail, isMobilePhone } = require("validator");
+const prescriptionSchema = require("./prescription");
 const res = require("express/lib/response");
 
 const patientSchema = new mongoose.Schema({
+
+  patientID: {
+    type: String,
+    unique: true, 
+    required: true
+},
   healthID: {
     type: String,
-    },
+  },
   name: {
     firstName: {
       type: String,
@@ -21,10 +28,33 @@ const patientSchema = new mongoose.Schema({
       required: [true, "Please enter full Name"],
     },
   },
+  email: {
+    type: String,
+    required: [true, "Please enter email"],
+    validate: [isEmail, "Please Enter a valid Email"],
+  },
   dob: {
     type: Date,
     required: [true, "Please enter Date of Birth"],
   },
+  gender: {
+    type: String,
+    enum: ['Male', 'Female', 'Other'],
+    required: [true, "Please specify gender"],
+},
+
+mobile: {
+  type: [String],
+  required: [true, "Please enter at least one Mobile Number"],
+  validate: {
+      validator: function(v) {
+          return v.every(num => num.length >= 10); 
+      },
+      message: "Please enter valid Mobile Number(s)",
+  }
+},
+
+  
   mobile: {
     type: String,
     required: [true, "Please enter Mobile Number"],
@@ -33,7 +63,7 @@ const patientSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, "Please enter email"],
-    
+    validate: [isEmail, "Please Enter a valid Email"],
   },
   adharCard: {
     type: Number,
@@ -74,6 +104,32 @@ const patientSchema = new mongoose.Schema({
       required: [true, "Please enter complete Address"],
     },
   },
+  bloodGroup: {
+    type: String,
+    required: [true, "Please enter Blood Group"],
+  },
+  allergies: {
+    type: [String],
+    default: [],
+},
+medication: {
+  type: {
+      name: {
+          type: String,
+          required: [true, "Please enter medication name"],
+      },
+      dosage: {
+          type: String,
+         
+      },
+      frequency: {
+          type: String,
+          
+      },
+     
+  },
+  
+},
   password: {
     type: String,
     required: [true, "Please enter password"],
@@ -89,6 +145,10 @@ const patientSchema = new mongoose.Schema({
       },
     },
   ],
+
+    
+   timestamps: true
+
   contactPerson: {
     name: {
       firstName: {
@@ -108,7 +168,7 @@ const patientSchema = new mongoose.Schema({
     email: {
       type: String,
       lowercase: true,
-      
+      validate: [isEmail, "Please enter a valid email."],
     },
     relation: {
       type: String,
@@ -142,7 +202,8 @@ const patientSchema = new mongoose.Schema({
       },
     },
   },
-  
+  prescriptions: [prescriptionSchema],
+
 });
 
 patientSchema.pre("save", async function (next) {

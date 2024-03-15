@@ -9,8 +9,6 @@ export default function Home() {
     <div>
       <Nav></Nav>
       <HeroSection></HeroSection>
-    </div>
-    
-   
+    </div> 
   );
 }
