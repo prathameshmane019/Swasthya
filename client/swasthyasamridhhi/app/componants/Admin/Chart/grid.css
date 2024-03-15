@@ -1,0 +1,23 @@
+.grid-demo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .filter-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .filter-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .filter-option label {
+    margin-right: 10px;
+  }
+  
