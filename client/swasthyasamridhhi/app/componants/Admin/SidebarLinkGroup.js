@@ -1,14 +1,12 @@
 "use client"
 import { useState } from "react"
 
-const SidebarLinkGroup = ({ children, activeCondition }) => {
-  const [open, setOpen] = useState(activeCondition)
+const SidebarLinkGroup = () => {
+  
 
-  const handleClick = () => {
-    setOpen(!open)
-  }
 
-  return <li>{children(handleClick, open)}</li>
+
+  return (<li></li>)
 }
 
 export default SidebarLinkGroup

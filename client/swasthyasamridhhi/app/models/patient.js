@@ -1,147 +1,64 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const { isEmail, isMobilePhone } = require("validator");
-const prescriptionSchema = require("./prescription");
-const res = require("express/lib/response");
+import mongoose from 'mongoose';
 
-const patientSchema = new mongoose.Schema({
+const { Schema, model } = mongoose;
 
+const patientSchema = new Schema({
   patientID: {
     type: String,
-    unique: true, 
-    required: true
-},
- 
+    required: true,
+    unique: true
+  },
   name: {
     firstName: {
       type: String,
-      required: [true, "Please enter full Name"],
+      required: true
     },
-    middleName: {
-      type: String,
-      required: [true, "Please enter full Name"],
-    },
+    middleName: String,
     surName: {
       type: String,
-      required: [true, "Please enter full Name"],
-    },
+      required: true
+    }
   },
   email: {
     type: String,
-    required: [true, "Please enter email"],
-    validate: [isEmail, "Please Enter a valid Email"],
+    required: true
   },
   dob: {
     type: Date,
-    required: [true, "Please enter Date of Birth"],
+    required: true
   },
   gender: {
     type: String,
-    enum: ['Male', 'Female', 'Other'],
-    required: [true, "Please specify gender"],
-},
-
-mobile: {
-  type: [String],
-  required: [true, "Please enter at least one Mobile Number"],
-  validate: {
-      validator: function(v) {
-          return v.every(num => num.length >= 10); 
-      },
-      message: "Please enter valid Mobile Number(s)",
-  }
-},
-
-  
-  
+    required: true
+  },
+  mobile: {
+    type: String,
+    required: true
+  },
   adharCard: {
-    type: Number,
-    min: [100000000000, "Please enter an valid AdharCard Number"],
-    max: [999999999999, "Please enter an valid AdharCard Number"],
-    unique: [true, "This AdharCard is already Registerd on System."],
-    required: [true, "Please enter AdharCard Number"],
+    type: String,
+    required: true
   },
   bloodGroup: {
     type: String,
-    required: [true, "Please enter Blood Group"],
+    required: true
   },
   address: {
-    building: {
-      type: String,
-      required: [true, "Please enter complete Address"],
-    },
-    city: {
-      type: String,
-      required: [true, "Please enter complete Address"],
-    },
-    taluka: {
-      type: String,
-      required: [true, "Please enter complete Address"],
-    },
-    district: {
-      type: String,
-      required: [true, "Please enter complete Address"],
-    },
-    state: {
-      type: String,
-      required: [true, "Please enter complete Address"],
-    },
-    pincode: {
-      type: Number,
-      min: [100000, "Please enter a valid pincode"],
-      max: [999999, "Please enter a valid pincode"],
-      required: [true, "Please enter complete Address"],
-    },
+    building: String,
+    city: String,
+    taluka: String,
+    district: String,
+    state: String,
+    pincode: String
   },
+  allergies: String,
+  medication: {
+    name: String,
+    dosage: String,
+    frequency: String
+  }
+}, { timestamps: true });
 
-  allergies: {
-    type: [String],
-    default: [],
-},
-medication: {
-  type: {
-      name: {
-          type: String,
-          required: [true, "Please enter medication name"],
-      },
-      dosage: {
-          type: String,
-         
-      },
-      frequency: {
-          type: String,
-          
-      },
-     
-  },
-  
-},
+const Patient = mongoose.models.Patient || model('Patient', patientSchema);
 
-  diseases: [
-    {
-      disease: {
-        type: String,
-      },
-      yrs: {
-        type: Number,
-      },
-    },
-  ],
-
-    
-   timestamps: true
-
-
-});
-
-patientSchema.pre("save", async function (next) {
-  const salt = await bcrypt.genSalt();
-  this.password = await bcrypt.hash(this.password, salt);
-  next();
-});
-
-
-
-const Patient = mongoose.model("patient", patientSchema);
-
-module.exports = Patient;
+export default Patient;

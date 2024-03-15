@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
+import LoginForm from '../componants/Login/Loginfrom';
 
 import { useRouter } from 'next/navigation'; // Changed to 'next/router'
 
@@ -23,7 +24,6 @@ export default function HomePage() {
         throw new Error('MetaMask is not installed');
       }
 
-
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       await provider.send('eth_requestAccounts', []);
       const signer = provider.getSigner();
@@ -35,6 +35,8 @@ export default function HomePage() {
         address,
         redirect: false,
       });
+
+
       if(result!='undefined'){
         console.log("logged in successfull");
 
@@ -57,9 +59,9 @@ export default function HomePage() {
       } else {
         console.log("Logged in successfully");
 
-       router.push("home")
+       router.push("doctor")
 
-      }
+      }}
     } catch (error) {
       console.error('Error:', error.message);
     }
@@ -67,7 +69,8 @@ export default function HomePage() {
 
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h1>Welcome to my site!</h1>
+
+      <h1>Metamask login</h1>
       <p>Please select an option below to continue:</p>
       <button onClick={handleMetamaskLogin} disabled={!isMetamaskInstalled} style={{ padding: '10px 20px', fontSize: '16px', backgroundColor: '#007bff', color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '5px' }}>
         Login with MetaMask
@@ -79,6 +82,7 @@ export default function HomePage() {
           Signup
         </button>
       </Link>
+      {/* <LoginForm></LoginForm> */}
     </div>
   );
 }

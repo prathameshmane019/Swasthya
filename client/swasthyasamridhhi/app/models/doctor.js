@@ -1,32 +1,33 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const { isEmail } = require("validator");
+import mongoose from 'mongoose';
+import { isEmail } from 'validator';
 
-const doctorSchema = new mongoose.Schema(
+const { Schema, model } = mongoose;
+
+const doctorSchema = new Schema({
   doctorID: {
     type: String,
     unique: true, 
     required: true
-},
+  },
   name: {
     firstName: {
       type: String,
-      required: [true, "Please enter full Name"],
+      required: [true, "Please enter full Name"]
     },
     middleName: {
       type: String,
-      required: [true, "Please enter full Name"],
+      required: [true, "Please enter full Name"]
     },
     surName: {
       type: String,
-      required: [true, "Please enter full Name"],
-    },
+      required: [true, "Please enter full Name"]
+    }
   },
   email: {
     type: String,
     required: [true, "Please enter email"],
     unique: [true, "Email already Exist"],
-    validate: [isEmail, "Please Enter a valid Email"],
+    validate: [isEmail, "Please Enter a valid Email"]
   },
   specialization: [
     {
@@ -37,97 +38,58 @@ const doctorSchema = new mongoose.Schema(
   ],
   org: {
     type: String,
-    required: [true, "Please enter Hospital of clinic name."],
+    required: [true, "Please enter Hospital or clinic name."]
   },
   orgAddress: {
     building: {
       type: String,
-      required: [true, "Please enter complete Address of contact person"],
+      required: [true, "Please enter complete Address of contact person"]
     },
     city: {
       type: String,
-      required: [true, "Please enter complete Address of contact person"],
+      required: [true, "Please enter complete Address of contact person"]
     },
     taluka: {
       type: String,
-      required: [true, "Please enter complete Address of contact person"],
+      required: [true, "Please enter complete Address of contact person"]
     },
     district: {
       type: String,
-      required: [true, "Please enter complete Address of contact person"],
+      required: [true, "Please enter complete Address of contact person"]
     },
     state: {
       type: String,
-      required: [true, "Please enter complete Address of contact person"],
+      required: [true, "Please enter complete Address of contact person"]
     },
     pincode: {
       type: Number,
-      required: [true, "Please Enter complete Address of contact person"],
-    },
+      required: [true, "Please enter complete Address of contact person"]
+    }
   },
   dob: {
     type: Date,
-    required: [true, "Please enter Date of Birth"],
+    required: [true, "Please enter Date of Birth"]
   },
   mobile: {
     type: [String],
     required: [true, "Please enter at least one Mobile Number"],
     validate: {
-        validator: function(v) {
-            return v.every(num => num.length >= 10); // Validates each mobile number in the array
-        },
-        message: "Please enter valid Mobile Number(s)",
+      validator: function(v) {
+        return v.every(num => num.length >= 10); // Validates each mobile number in the array
+      },
+      message: "Please enter valid Mobile Number(s)"
     }
-},
-org: {
-  type: String,
-  required: [true, "Please enter Hospital of clinic name."],
-},
-orgAddress: {
-  building: {
-    type: String,
-    required: [true, "Please enter complete Address of contact person"],
-  },
-  city: {
-    type: String,
-    required: [true, "Please enter complete Address of contact person"],
-  },
-  taluka: {
-    type: String,
-    required: [true, "Please enter complete Address of contact person"],
-  },
-  district: {
-    type: String,
-    required: [true, "Please enter complete Address of contact person"],
-  },
-  state: {
-    type: String,
-    required: [true, "Please enter complete Address of contact person"],
-  },
-  pincode: {
-    type: Number,
-    required: [true, "Please Enter complete Address of contact person"],
-  },
-},
-    type: String,
-    required: [true, "Please enter Mobile Number"],
-    minlength: [10, "Please Enter a valid Mobile Number"],
-  },
-  email: {
-    type: String,
-    required: [true, "Please enter email"],
-    unique: [true, "Email already Exist"],
-    validate: [isEmail, "Please Enter a valid Email"],
   },
   adharCard: {
     type: Number,
-    unique: [true, "This AdharCard is already Registerd on System."],
-    required: [true, "Pleasee enter AdharCard Number"],
-    minlength: [12, "Please enter an valid AdharCard Number"],
+    // unique: [true, "This AdharCard is already Registered on System."],
+    // required: [true, "Please enter AdharCard Number"],
+    // minlength: [12, "Please enter a valid AdharCard Number"]
+    required: [true, " Please enter adharCard "]
   },
   bloodGroup: {
     type: String,
-    required: [true, "Please enter Blood Group"],
+    required: [true, "Please enter Blood Group"]
   },
   education: [
     {
@@ -136,87 +98,48 @@ orgAddress: {
       },
     },
   ],
-  password: {
-    type: String,
-    required: [true, "Please enter password"],
-    minlength: [8, "Minimum length of password should must be 8 characters"],
-  },
-
   address: {
     building: {
       type: String,
-      required: [true, "Please enter complete Address of contact person"],
+      required: [true, "Please enter complete Address of contact person"]
     },
     city: {
       type: String,
-      required: [true, "Please enter complete Address of contact person"],
+      required: [true, "Please enter complete Address of contact person"]
     },
     taluka: {
       type: String,
-      required: [true, "Please enter complete Address of contact person"],
+      required: [true, "Please enter complete Address of contact person"]
     },
     district: {
       type: String,
-      required: [true, "Please enter complete Address of contact person"],
+      required: [true, "Please enter complete Address of contact person"]
     },
     state: {
       type: String,
-      required: [true, "Please enter complete Address of contact person"],
+      required: [true, "Please enter complete Address of contact person"]
     },
     pincode: {
       type: Number,
-      required: [true, "Please Enter complete Address of contact person"],
-    },
+      required: [true, "Please Enter complete Address of contact person"]
+    }
   },
-
   licenseNumber: {
     type: String,
-    required: [true, "Please enter License Number"],
-},
-
-  
-
-  specialization: [
-    {
-      special: {
-        type: String,
-      },
-    },
-  ],
-
+    required: [true, "Please enter License Number"]
+  },
   emergencyno: {
     type: String,
     required: [true, "Please enter Mobile Number"],
-    minlength: [10, "Please Enter a valid Mobile Number"],
+    minlength: [10, "Please Enter a valid Mobile Number"]
   },
   orgNumber: {
     type: String,
     required: [true, "Please enter Mobile Number"],
-    minlength: [10, "Please Enter a valid Mobile Number"],
-  },
-
-  timestamps: true
-
-});
-
-doctorSchema.pre("save", async function (next) {
-  const salt = await bcrypt.genSalt();
-  this.password = await bcrypt.hash(this.password, salt);
-  next();
-});
-
-doctorSchema.statics. = async function (email, password) {
-  const doctor = await this.findOne({ email });
-  if (doctor) {
-    const auth = await bcrypt.compare(password, doctor.password);
-    if (auth) {
-      return doctor;
-    }
-    throw Error("Incorrect Password");
+    minlength: [10, "Please Enter a valid Mobile Number"]
   }
-  throw Error("Invalid email");
-};
+}, { timestamps: true });
 
-const Doctor = mongoose.model("doctor", doctorSchema);
+const Doctor = mongoose.models.Doctor || model('Doctor', doctorSchema);
 
-module.exports = Doctor;
+export default Doctor;

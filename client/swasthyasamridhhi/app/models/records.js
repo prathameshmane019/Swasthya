@@ -1,6 +1,7 @@
-const mongoose = require("mongoose");
+// models/HealthRecord.js
 
-
+import mongoose from 'mongoose';
+import { Schema } from 'mongoose';
 const healthRecordSchema = new mongoose.Schema({
     patientID: {
         type: String,
@@ -28,13 +29,18 @@ const healthRecordSchema = new mongoose.Schema({
     },
     notes: {
         type: String,
-        required: [true, "Please provide Status"]
-    },
-    
-    
-        timestamps: true
+        required: [true, "Please provide Notes"]
+    }
+}, {
+    timestamps: true
 });
 
-const HealthRecord = mongoose.model('HealthRecord', healthRecordSchema);
+let HealthRecord;
 
-module.exports = HealthRecord;
+try {
+    HealthRecord = mongoose.models.HealthRecord || mongoose.model('HealthRecord', healthRecordSchema);
+} catch (error) {
+    HealthRecord = mongoose.model('HealthRecord', healthRecordSchema);
+}
+
+export default HealthRecord;
