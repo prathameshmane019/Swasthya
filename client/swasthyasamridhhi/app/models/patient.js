@@ -5,7 +5,7 @@ const { Schema, model } = mongoose;
 const patientSchema = new Schema({
   patientID: {
     type: String,
-    required: true,
+    
     unique: true
   },
   name: {
