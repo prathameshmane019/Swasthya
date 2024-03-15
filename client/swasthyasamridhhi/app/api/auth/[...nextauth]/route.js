@@ -9,6 +9,7 @@ export const authOptions = ({
       credentials: {},
       async authorize(credentials) {
         try {
+
           
           await connectMongoDB();
           const address = credentials.address;
@@ -19,6 +20,7 @@ export const authOptions = ({
           console.log(isVerified);
           
           console.log(user);
+
           if (!user) {
             return null;
           }
