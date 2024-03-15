@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation'; // Change from 'next/navigation' to 'next/router'
+import { useRouter } from 'next/navigation'; // Changed to 'next/router'
 
 export default function HomePage() {
   const [isMetamaskInstalled, setIsMetamaskInstalled] = useState(false);
@@ -38,7 +38,7 @@ export default function HomePage() {
         throw new Error(result.error);
       } else {
         console.log("Logged in successfully");
-        router.replace("/doctor");
+       router.push("home")
       }
     } catch (error) {
       console.error('Error:', error.message);
@@ -46,16 +46,18 @@ export default function HomePage() {
   }
 
   return (
-    <div>
+    <div style={{ textAlign: 'center', marginTop: '50px' }}>
       <h1>Welcome to my site!</h1>
       <p>Please select an option below to continue:</p>
-      <button onClick={handleMetamaskLogin} disabled={!isMetamaskInstalled}>
+      <button onClick={handleMetamaskLogin} disabled={!isMetamaskInstalled} style={{ padding: '10px 20px', fontSize: '16px', backgroundColor: '#007bff', color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '5px' }}>
         Login with MetaMask
       </button>
       <br />
       <br />
       <Link href="/signup">
-        <button>Signup</button>
+        <button style={{ padding: '10px 20px', fontSize: '16px', backgroundColor: '#28a745', color: '#fff', border: 'none', cursor: 'pointer', borderRadius: '5px' }}>
+          Signup
+        </button>
       </Link>
     </div>
   );
