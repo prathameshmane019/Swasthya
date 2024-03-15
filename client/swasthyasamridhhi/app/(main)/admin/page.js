@@ -4,7 +4,7 @@ import axios from 'axios';
 import DefaultLayout from "../../componants/Admin/DefaultLayout"
 import Compoanants from "../../componants/Admin/admincomponent"
 
-function ExampleComponent() {
+export default function ExampleComponent () {
   const [formData, setFormData] = useState({ name: '', age: '' });
 
   const handleChange = e => {
@@ -21,7 +21,7 @@ function ExampleComponent() {
       console.error('Error:', error.response.data);
     }
   };
-
+}
 
 function page() {
   return (
@@ -33,4 +33,3 @@ function page() {
   )
 }
 
-export default page
