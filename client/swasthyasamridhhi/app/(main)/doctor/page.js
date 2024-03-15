@@ -1,16 +1,30 @@
-"use client";
-
+'use client'
 import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function UserInfo() {
-  
   const { data: session } = useSession();
   const router = useRouter();
-   function handleLogout () {
-    router.push("/admin")
-    signOut();
+
+  async function handleLogout() {
+    try {
+      // Check if MetaMask is connected
+      if (window.ethereum && window.ethereum.isConnected()) {
+        // Prompt the user to disconnect manually
+        const confirmDisconnect = confirm("Please disconnect from MetaMask before logging out. Once disconnected, click OK to proceed.");
+        
+        if (!confirmDisconnect) {
+          return; // Cancel the logout process if the user cancels the disconnection
+        }
+      }
+      router.push("/admin");
+      // Proceed with logout
+      await signOut();
+      
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
   }
 
   return (
