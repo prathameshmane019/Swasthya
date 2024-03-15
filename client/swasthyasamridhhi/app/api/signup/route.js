@@ -17,7 +17,7 @@ export async function POST(req) {
     const blockchainAddress = wallet.address;
     const blockchainPrivateKey = wallet.privateKey;
     console.log(blockchainAddress);
-    // Save user data in MongoDB      
+   
     const newUser = new User({ name, email, blockchainAddress });
     await newUser.save();
     return NextResponse.json({message:"User registered"})
