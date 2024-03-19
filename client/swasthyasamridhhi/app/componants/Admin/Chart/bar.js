@@ -4,7 +4,7 @@ import { BarChart } from '@mui/x-charts/BarChart';
 const chartSetting = {
   xAxis: [
     {
-      label: 'rainfall (mm)',
+      label: 'Disease',
     },
   ],
   width: 600,
@@ -13,87 +13,87 @@ const chartSetting = {
 
 const dataset = [
   {
-    london: 59,
-    paris: 57,
-    newYork: 86,
-    seoul: 21,
+    Typhoid: 59,
+    Dengue: 57,
+    Arithritis: 86,
+    BloodPressure: 21,
     month: 'Jan',
   },
   {
-    london: 50,
-    paris: 52,
-    newYork: 78,
-    seoul: 28,
+    Typhoid: 50,
+    Dengue: 52,
+    Arithritis: 78,
+    BloodPressure: 28,
     month: 'Fev',
   },
   {
-    london: 47,
-    paris: 53,
-    newYork: 106,
-    seoul: 41,
+    Typhoid: 47,
+    Dengue: 53,
+    Arithritis: 106,
+    BloodPressure: 41,
     month: 'Mar',
   },
   {
-    london: 54,
-    paris: 56,
-    newYork: 92,
-    seoul: 73,
+    Typhoid: 54,
+    Dengue: 56,
+    Arithritis: 92,
+    BloodPressure: 73,
     month: 'Apr',
   },
   {
-    london: 57,
-    paris: 69,
-    newYork: 92,
-    seoul: 99,
+    Typhoid: 57,
+    Dengue: 69,
+    Arithritis: 92,
+    BloodPressure: 99,
     month: 'May',
   },
   {
-    london: 60,
-    paris: 63,
-    newYork: 103,
-    seoul: 144,
+    Typhoid: 60,
+    Dengue: 63,
+    Arithritis: 103,
+    BloodPressure: 144,
     month: 'June',
   },
   {
-    london: 59,
-    paris: 60,
-    newYork: 105,
-    seoul: 319,
+    Typhoid: 59,
+    Dengue: 60,
+    Arithritis: 105,
+    BloodPressure: 319,
     month: 'July',
   },
   {
-    london: 65,
-    paris: 60,
-    newYork: 106,
-    seoul: 249,
+    Typhoid: 65,
+    Dengue: 60,
+    Arithritis: 106,
+    BloodPressure: 249,
     month: 'Aug',
   },
   {
-    london: 51,
-    paris: 51,
-    newYork: 95,
-    seoul: 131,
+    Typhoid: 51,
+    Dengue: 51,
+    Arithritis: 95,
+    BloodPressure: 131,
     month: 'Sept',
   },
   {
-    london: 60,
-    paris: 65,
-    newYork: 97,
-    seoul: 55,
+    Typhoid: 60,
+    Dengue: 65,
+    Arithritis: 97,
+    BloodPressure: 55,
     month: 'Oct',
   },
   {
-    london: 67,
-    paris: 64,
-    newYork: 76,
-    seoul: 48,
+    Typhoid: 67,
+    Dengue: 64,
+    Arithritis: 76,
+    BloodPressure: 48,
     month: 'Nov',
   },
   {
-    london: 61,
-    paris: 70,
-    newYork: 103,
-    seoul: 25,
+    Typhoid: 61,
+    Dengue: 70,
+    Arithritis: 103,
+    BloodPressure: 25,
     month: 'Dec',
   },
 ];
@@ -101,7 +101,7 @@ const dataset = [
 const valueFormatter = (value) => `${value}mm`;
 
 export default function HorizontalBars() {
-  const [selectedDisease, setSelectedDisease] = useState('seoul');
+  const [selectedDisease, setSelectedDisease] = useState('Blood-Pressure');
 
   const handleDiseaseChange = (event) => {
     setSelectedDisease(event.target.value);
@@ -112,16 +112,16 @@ export default function HorizontalBars() {
       <div>
         <label>Select Disease:</label>
         <select value={selectedDisease} onChange={handleDiseaseChange}>
-          <option value="london">London</option>
-          <option value="paris">Paris</option>
-          <option value="newYork">New York</option>
-          <option value="seoul">Seoul</option>
+          <option value="Typhoid">Typhoid</option>
+          <option value="Dengue">Dengue</option>
+          <option value="Arithritis">Arithritis</option>
+          <option value="BloodPressure">Blood Pressure</option>
         </select>
       </div>
       <BarChart
         dataset={dataset}
         yAxis={[{ scaleType: 'band', dataKey: 'month' }]}
-        series={[{ dataKey: selectedDisease, label: `${selectedDisease} rainfall`, valueFormatter }]}
+        series={[{ dataKey: selectedDisease, label: `${selectedDisease} Disease`, valueFormatter }]}
         layout="horizontal"
         {...chartSetting}
       />

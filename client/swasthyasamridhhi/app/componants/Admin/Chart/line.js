@@ -2,36 +2,37 @@ import React, { useState, useEffect } from 'react';
 import { LineChart } from '@mui/x-charts/LineChart';
 
 export default function GridDemo() {
-  const [timestampRange, setTimestampRange] = useState([1, 10]);
-  const [diseaseRateRange, setDiseaseRateRange] = useState([1, 10]);
-  const [selectedCity, setSelectedCity] = useState('');
-  const [selectedDistrict, setSelectedDistrict] = useState('');
+  const [timestampRange, setTimestampRange] = useState([1, 5]); // Default timestamp range
   const [data, setData] = useState([]);
 
   useEffect(() => {
     fetchData();
-  }, [selectedCity, selectedDistrict, timestampRange, diseaseRateRange]);
+  }, [timestampRange]);
 
   const fetchData = async () => {
     try {
-      const response = await fetch('YOUR_API_ENDPOINT');
-      const jsonData = await response.json();
-      setData(jsonData);
+      // Simulating fetching data from an API
+      const fakeData = [
+        { timestamp: 1, diseaseRate: 5 },
+        { timestamp: 2, diseaseRate: 8 },
+        { timestamp: 3, diseaseRate: 12 },
+        { timestamp: 4, diseaseRate: 6 },
+        { timestamp: 5, diseaseRate: 7 },
+        { timestamp: 6, diseaseRate: 8 },
+        { timestamp: 8, diseaseRate: 9 },
+        { timestamp: 9, diseaseRate: 10 },
+        { timestamp: 9, diseaseRate: 11 },
+        
+      ];
+      setData(fakeData);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
-  // Get unique cities and districts from data
-  const cities = [...new Set(data.map(item => item.city))];
-  const districts = [...new Set(data.map(item => item.district))];
-
-  // Filter data based on selected city and district
+  // Filter data based on selected timestamp range
   const filteredData = data.filter(item =>
-    (!selectedCity || item.city === selectedCity) &&
-    (!selectedDistrict || item.district === selectedDistrict) &&
-    item.timestamp >= timestampRange[0] && item.timestamp <= timestampRange[1] &&
-    item.diseaseRate >= diseaseRateRange[0] && item.diseaseRate <= diseaseRateRange[1]
+    item.timestamp >= timestampRange[0] && item.timestamp <= timestampRange[1]
   );
 
   return (
@@ -48,43 +49,6 @@ export default function GridDemo() {
           value={timestampRange[1]}
           onChange={e => setTimestampRange([timestampRange[0], parseInt(e.target.value)])}
         />
-      </div>
-      <div>
-        <label>Disease Rate Range:</label>
-        <input
-          type="number"
-          value={diseaseRateRange[0]}
-          onChange={e => setDiseaseRateRange([parseInt(e.target.value), diseaseRateRange[1]])}
-        />
-        <input
-          type="number"
-          value={diseaseRateRange[1]}
-          onChange={e => setDiseaseRateRange([diseaseRateRange[0], parseInt(e.target.value)])}
-        />
-      </div>
-      <div>
-        <label>City:</label>
-        <select
-          value={selectedCity}
-          onChange={e => setSelectedCity(e.target.value)}
-        >
-          <option value="">All</option>
-          {cities.map(city => (
-            <option key={city} value={city}>{city}</option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <label>District:</label>
-        <select
-          value={selectedDistrict}
-          onChange={e => setSelectedDistrict(e.target.value)}
-        >
-          <option value="">All</option>
-          {districts.map(district => (
-            <option key={district} value={district}>{district}</option>
-          ))}
-        </select>
       </div>
       <LineChart
         xAxis={[{ data: filteredData.map(item => item.timestamp) }]}

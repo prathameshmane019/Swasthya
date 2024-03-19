@@ -45,7 +45,7 @@ export default function Registration(props) {
     e.preventDefault();
     console.log(formData);
     try {
-      const result = await axios.post('http://localhost:3000/api/doctor/register', formData);
+      const result = await axios.post('http://localhost:3000/api/', formData);
       console.log(result);
     } catch (error) {
       console.error('Registration failed:', error);

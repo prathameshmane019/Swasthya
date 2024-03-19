@@ -4,7 +4,7 @@ import axios from 'axios';
 import DefaultLayout from "../../componants/Admin/DefaultLayout"
 import Compoanants from "../../componants/Admin/admincomponent"
 
-export default function ExampleComponent () {
+export function ExampleComponent () {
   const [formData, setFormData] = useState({ name: '', age: '' });
 
   const handleChange = e => {
@@ -23,7 +23,7 @@ export default function ExampleComponent () {
   };
 }
 
-function page() {
+export default function page() {
   return (
     <div className=' bg-purple-300'>
       <DefaultLayout className=' bg-purple-300'>

@@ -6,26 +6,16 @@ const chartSettings = {
   width: 500
 };
 
+// Sample fake data
+const fakeData = [
+  { label: 'Disease A', value: 100 },
+  { label: 'Disease B', value: 200 },
+  { label: 'Disease C', value: 300 },
+];
+
 export default function PieActiveArc() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(fakeData); // Initialize with fake data
   const [selectedDisease, setSelectedDisease] = useState('');
-
-  useEffect(() => {
-    fetchData();
-  }, [selectedDisease]);
-
-  const fetchData = async () => {
-    try {
-      const response = await fetch('YOUR_API_ENDPOINT');
-      if (!response.ok) {
-        throw new Error('Failed to fetch data');
-      }
-      const jsonData = await response.json();
-      setData(jsonData);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
 
   const handleDiseaseChange = (event) => {
     setSelectedDisease(event.target.value);
@@ -37,9 +27,9 @@ export default function PieActiveArc() {
         <label>Select Disease:</label>
         <select value={selectedDisease} onChange={handleDiseaseChange}>
           <option value="">All</option>
-          <option value="series A">Series A</option>
-          <option value="series B">Series B</option>
-          <option value="series C">Series C</option>
+          <option value="Disease A">Disease A</option>
+          <option value="Disease B">Disease B</option>
+          <option value="Disease C">Disease C</option>
           {/* Add more options as needed */}
         </select>
       </div>

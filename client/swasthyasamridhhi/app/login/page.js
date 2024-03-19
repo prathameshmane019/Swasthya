@@ -59,7 +59,7 @@ export default function HomePage() {
       } else {
         console.log("Logged in successfully");
 
-       router.push("doctor")
+       router.push("admin")
 
       }}
     } catch (error) {

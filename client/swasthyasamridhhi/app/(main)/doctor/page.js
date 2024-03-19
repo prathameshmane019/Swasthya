@@ -18,7 +18,7 @@ export default function UserInfo() {
           return; // Cancel the logout process if the user cancels the disconnection
         }
       }
-      router.push("/admin");
+      router.push("/");
       // Proceed with logout
       await signOut();
       
@@ -38,7 +38,7 @@ export default function UserInfo() {
         </div>
         <button
           onClick={handleLogout}
-          className="bg-red-500 text-white font-bold px-6 py-2 mt-3"
+          className="bg-black text-white font-bold px-6 py-2 mt-3"
         >
           Log Out
         </button>
